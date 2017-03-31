@@ -96,6 +96,7 @@
 				TargetAttributes = {
 					1D97C7CF1E8EAF2B00D3A46C = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = K7PJHE383W;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -260,6 +261,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K7PJHE383W;
 				INFOPLIST_FILE = "Humbly Congress/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "HumblyHuman.Humbly-Congress";
@@ -272,6 +274,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K7PJHE383W;
 				INFOPLIST_FILE = "Humbly Congress/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "HumblyHuman.Humbly-Congress";
