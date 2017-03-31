@@ -43,6 +43,8 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
 
     @IBAction func faxPolitician(_ sender: UIButton) {
         
+        print("faxing")
+        
         if (messageComposer.canSendText()) {
             // Obtain a configured MFMessageComposeViewController
             let messageComposeVC = messageComposer.configuredMessageComposeViewController()
@@ -52,7 +54,6 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             // since it implements the appropriate delegate call-back
             present(messageComposeVC, animated: true, completion: nil)
         } else {
-            print("not allowed to fax")
         }
         
     }
