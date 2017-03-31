@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		1D97C7D41E8EAF2B00D3A46C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7D31E8EAF2B00D3A46C /* AppDelegate.swift */; };
-		1D97C7D61E8EAF2B00D3A46C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7D51E8EAF2B00D3A46C /* ViewController.swift */; };
 		1D97C7D91E8EAF2B00D3A46C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D97C7D71E8EAF2B00D3A46C /* Main.storyboard */; };
 		1D97C7DB1E8EAF2B00D3A46C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D97C7DA1E8EAF2B00D3A46C /* Assets.xcassets */; };
 		1D97C7DE1E8EAF2B00D3A46C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D97C7DC1E8EAF2B00D3A46C /* LaunchScreen.storyboard */; };
+		1D97C7E81E8EB71200D3A46C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7E71E8EB71200D3A46C /* Message.swift */; };
+		1D97C7EA1E8EBE0C00D3A46C /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */; };
+		1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */; };
+		1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D97C7D01E8EAF2B00D3A46C /* Humbly Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Humbly Congress.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D97C7D31E8EAF2B00D3A46C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1D97C7D51E8EAF2B00D3A46C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1D97C7D81E8EAF2B00D3A46C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D97C7DA1E8EAF2B00D3A46C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D97C7DD1E8EAF2B00D3A46C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D97C7DF1E8EAF2B00D3A46C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D97C7E71E8EB71200D3A46C /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
+		1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventChecker.swift; sourceTree = "<group>"; };
+		1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +60,11 @@
 		1D97C7D21E8EAF2B00D3A46C /* Humbly Congress */ = {
 			isa = PBXGroup;
 			children = (
+				1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */,
+				1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */,
+				1D97C7E71E8EB71200D3A46C /* Message.swift */,
+				1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */,
 				1D97C7D31E8EAF2B00D3A46C /* AppDelegate.swift */,
-				1D97C7D51E8EAF2B00D3A46C /* ViewController.swift */,
 				1D97C7D71E8EAF2B00D3A46C /* Main.storyboard */,
 				1D97C7DA1E8EAF2B00D3A46C /* Assets.xcassets */,
 				1D97C7DC1E8EAF2B00D3A46C /* LaunchScreen.storyboard */,
@@ -137,7 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D97C7D61E8EAF2B00D3A46C /* ViewController.swift in Sources */,
+				1D97C7E81E8EB71200D3A46C /* Message.swift in Sources */,
+				1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */,
+				1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */,
+				1D97C7EA1E8EBE0C00D3A46C /* EventTableViewController.swift in Sources */,
 				1D97C7D41E8EAF2B00D3A46C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +314,7 @@
 				1D97C7E41E8EAF2B00D3A46C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
