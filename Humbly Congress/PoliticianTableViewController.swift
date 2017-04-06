@@ -126,6 +126,8 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
         super.viewDidLoad()
         
+        //for debugging reasons, reinit counter to 0 here.
+        counter = 0
         
         //first, get the user's location
         let userLocation = CLLocationManager().location!
