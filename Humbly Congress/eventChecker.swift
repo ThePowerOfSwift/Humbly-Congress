@@ -355,28 +355,28 @@ class eventChecker: FirstEventCell {
         else if (32000 ... 34999).contains(postalCode){
             
             eventName[0] = "Town Hall"
-            evntDescription[0] = "Hosted by Vern Buchanan"
-            evntLocation[0] = "4209 S Tamiami Trail # 4231, Sarasota, FL 34231"
-            evntURL[0] = " "
-            evntDate[0] = "Sunday, February 26, 2017"
+            evntDescription[0] = "Hosted by Ron DeSantis"
+            evntLocation[0] = "600 S Clyde Morris Blvd, Daytona Beach, FL 32114"
+            evntURL[0] = "https://townhallproject.com"
+            evntDate[0] = "Mon, Apr 17, 2017"
             
-            eventName[1] = "March Against Police Brutality"
-            evntDescription[1] = "Peaceful march for the countless lives lost through police shootings on innocent victims."
-            evntLocation[1] = "1565 1st St, Sarasota, FL 34236"
-            evntURL[1] = " "
+            eventName[1] = "Town Hall"
+            evntDescription[1] = "Hosted by Ted Yoho"
+            evntLocation[1] = "1001 SE 12th St, Gainesville, FL 32641"
+            evntURL[1] = "https://townhallproject.com"
             evntDate[1] = "Tuesday, February 28, 2017"
             
             eventName[2] = "Town Hall"
-            evntDescription[2] = "Hosted by Senator Bill Nelson"
-            evntLocation[2] = "3000 NW 83rd St E-127, Gainesville, FL 32606"
-            evntURL[2] = " "
-            evntDate[2] = "Thursday, March 2, 2017"
+            evntDescription[2] = "Hosted by Ted Yoho"
+            evntLocation[2] = "466 Madison Ave, Orange Park, FL 32065"
+            evntURL[2] = "https://townhallproject.com"
+            evntDate[2] = "Saturday, April 8, 2017"
             
-            eventName[3] = "The Immigrants March"
-            evntDescription[3] = "A peaceful demonstration showing solace with American immigrants to prove that the Trump Administration's anti-immigration views are not shared by the majority of Americans."
-            evntLocation[3] = "736 Central Ave, Sarasota, FL 34236"
-            evntURL[3] = " "
-            evntDate[3] = "Wednesday, March 8, 2017"
+            eventName[3] = "Town Hall"
+            evntDescription[3] = "Hosted by Ted Yoho"
+            evntLocation[3] = "2509 Crill Ave #100, Palatka, FL 32177"
+            evntURL[3] = "https://townhallproject.com"
+            evntDate[3] = "Tuesday, April 11, 2017"
         }
             //South Carolina
         else if (29000 ... 29999).contains(postalCode){

@@ -85,6 +85,7 @@ class FirstEventCell: UITableViewCell, SFSafariViewControllerDelegate  {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMMM d, yyyy"
         let dateToFormat = when.currentTitle!
+        
         let startDate = formatter.date(from: dateToFormat)
         
         addEventToCalendar(title: self.title.text!, description: self.details.text!, startDate: startDate!, endDate: startDate!, location: whereEvent.titleLabel!.text!)
@@ -164,8 +165,11 @@ class EventTableViewController: UITableViewController, CLLocationManagerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userLocation = CLLocationManager().location!
         
+        if self.locationManager.location != nil {
+            userLocation = CLLocationManager().location!
+        }
+
         
     }
     

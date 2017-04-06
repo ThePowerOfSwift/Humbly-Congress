@@ -54,6 +54,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             // since it implements the appropriate delegate call-back
             present(messageComposeVC, animated: true, completion: nil)
         } else {
+            print("Not allowed to fax.")
         }
         
     }
@@ -64,7 +65,6 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     let locationManager = CLLocationManager()
     
-    var userLocation = CLLocationManager().location!
     
     //put in a default random one
     var zipcode: String = "33328"
@@ -74,30 +74,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     @IBOutlet var politicianTableView: UITableView!
     
-    typealias ZipcodeCompletionBlock = (String?) -> Void
-    
-    func getTableInfo(completionBlock: @escaping ZipcodeCompletionBlock) {
-        
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startMonitoringSignificantLocationChanges()
-        
-        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in
-            if error != nil {
-                print("Reverse geocoder failed with error" + error!.localizedDescription)
-                completionBlock(nil)
-            } else if placemarks!.count > 0 {
-                let pm = placemarks![0]
-                self.zipcode = pm.postalCode!
-                completionBlock(self.zipcode)
-            } else {
-                print("Problem with the data received from geocoder")
-                completionBlock(nil)
-            }
-        })
-        
-    }
+   
     
     
     
@@ -151,9 +128,10 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
         
         //first, get the user's location
-        userLocation = CLLocationManager().location!
-        let latitude = "\(userLocation.coordinate.latitude)"
-        let longitude = "\(userLocation.coordinate.longitude)"
+        let userLocation = CLLocationManager().location!
+        
+        let latitude = "\(String(describing: userLocation.coordinate.latitude))"
+        let longitude = "\(String(describing: userLocation.coordinate.longitude))"
         
         
         //next, use that location to create a link that uses an API to get the user's representatives.
@@ -249,19 +227,21 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+    
         print("bye")
         
          
-         if hellocounter < 500 {
-         DispatchQueue.main.async {
-         self.tableView.reloadData()
-         }
-         hellocounter += 1;
-         }
+        if hellocounter < 600 {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            hellocounter += 1;
+        }
          
         
         print("hello")
+        
+ 
         
         //self.tableView.reloadData()
         let cell = tableView.dequeueReusableCell(withIdentifier: "Politician", for: indexPath)
