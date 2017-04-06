@@ -126,7 +126,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
         super.viewDidLoad()
         
-        //for debugging reasons, reinit counter to 0 here.
+        //for debugging reasons, reinit counter to 0
         counter = 0
         
         //first, get the user's location
