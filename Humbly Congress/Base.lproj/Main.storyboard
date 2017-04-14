@@ -176,11 +176,11 @@
             </objects>
             <point key="canvasLocation" x="1785" y="810"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="vll-OV-6ni">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GRf-kv-Lg6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Nkw-Kp-xQW"/>
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="Nkw-Kp-xQW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ap0-oU-tLQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -195,11 +195,11 @@
             </objects>
             <point key="canvasLocation" x="847.20000000000005" y="67.916041979010501"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="E9C-W3-ckD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Lat-mc-DE7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Efp-ha-PGD"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="Efp-ha-PGD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="49j-fE-c1q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

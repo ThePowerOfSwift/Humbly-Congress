@@ -125,9 +125,13 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
+    
         
-        //for debugging reasons, reinit counter to 0
+        //for debugging reasons, reinit counters to 0
         counter = 0
+        imageCounter = 0
+        
+        
         
         //first, get the user's location
         let userLocation = CLLocationManager().location!
