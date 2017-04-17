@@ -119,7 +119,8 @@ class EventTableViewController: UITableViewController, CLLocationManagerDelegate
     
     let locationManager = CLLocationManager()
     
-    var userLocation = CLLocationManager().location!
+    var userLocation = CLLocationManager().location
+    
     
     var zipcode: String = "33328"
     
@@ -129,10 +130,10 @@ class EventTableViewController: UITableViewController, CLLocationManagerDelegate
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.startMonitoringSignificantLocationChanges()
         
-        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in
+        CLGeocoder().reverseGeocodeLocation(userLocation!, completionHandler: {(placemarks, error) -> Void in
             if error != nil {
                 print("Reverse geocoder failed with error" + error!.localizedDescription)
                 completionBlock(nil)
@@ -169,7 +170,6 @@ class EventTableViewController: UITableViewController, CLLocationManagerDelegate
         if self.locationManager.location != nil {
             userLocation = CLLocationManager().location!
         }
-
         
     }
     
@@ -200,58 +200,61 @@ class EventTableViewController: UITableViewController, CLLocationManagerDelegate
         
         //load location before table
         
-        self.getTableInfo { zipcode in
+        if (userLocation != nil) {
             
-            //grab user's location
-            let postalCode = Int(zipcode!)
-            let eventsChecker = eventChecker()
-            
-            //go to eventChecker to load events based off that zipcode
-            eventsChecker.getEvent(zipcode: postalCode!, title: self.events, date: self.dates, descriptions: self.descriptions, location: self.locations, url: self.urls)
-            
-            let eventName = eventsChecker.eventName
-            
-            let dateOfEvent = eventsChecker.evntDate
-            
-            let evntDescription = eventsChecker.evntDescription
-            
-            let evntLocation = eventsChecker.evntLocation
-            
-            let evntURL = eventsChecker.evntURL
-            
-            
-            //bottom three are for the cell, to parse thorough the array, configuring each element in its respective cell
-            
-            let eventTitle = eventName[indexPath.row]
-            
-            let eventDate = dateOfEvent[indexPath.row]
-            
-            let eventLocation = evntLocation[indexPath.row]
-            
-            let eventURL = evntURL[indexPath.row]
-            
-            let eventDescription = evntDescription[indexPath.row]
-            
-            //configure the cell
-            
-            if let eventCell = cell as? FirstEventCell {
+            self.getTableInfo { zipcode in
                 
-                eventCell.title?.text = eventTitle
+                //grab user's location
+                let postalCode = Int(zipcode!)
+                let eventsChecker = eventChecker()
                 
-                eventCell.details?.text = eventDescription
+                //go to eventChecker to load events based off that zipcode
+                eventsChecker.getEvent(zipcode: postalCode!, title: self.events, date: self.dates, descriptions: self.descriptions, location: self.locations, url: self.urls)
                 
-                eventCell.when.setTitle(eventDate, for:.normal)
+                let eventName = eventsChecker.eventName
                 
-                eventCell.whereEvent?.setTitle(eventLocation, for:.normal)
+                let dateOfEvent = eventsChecker.evntDate
                 
-                eventCell.website?.setTitle(eventURL, for:.normal)
+                let evntDescription = eventsChecker.evntDescription
+                
+                let evntLocation = eventsChecker.evntLocation
+                
+                let evntURL = eventsChecker.evntURL
+                
+                
+                //bottom three are for the cell, to parse thorough the array, configuring each element in its respective cell
+                
+                let eventTitle = eventName[indexPath.row]
+                
+                let eventDate = dateOfEvent[indexPath.row]
+                
+                let eventLocation = evntLocation[indexPath.row]
+                
+                let eventURL = evntURL[indexPath.row]
+                
+                let eventDescription = evntDescription[indexPath.row]
+                
+                //configure the cell
+                
+                if let eventCell = cell as? FirstEventCell {
+                    
+                    eventCell.title?.text = eventTitle
+                    
+                    eventCell.details?.text = eventDescription
+                    
+                    eventCell.when.setTitle(eventDate, for:.normal)
+                    
+                    eventCell.whereEvent?.setTitle(eventLocation, for:.normal)
+                    
+                    eventCell.website?.setTitle(eventURL, for:.normal)
+                }
+                
             }
             
         }
         
         return cell
+        
     }
-    
-    
     
 }

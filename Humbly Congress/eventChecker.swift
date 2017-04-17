@@ -1367,9 +1367,6 @@ class eventChecker: FirstEventCell {
             evntDate[3] = "Mon, April 17, 2017"
         }
 
-
-
-
         
 
     }
