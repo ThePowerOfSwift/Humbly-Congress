@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to find your representativs. It is never shared with anyone.</string>
+	<string>We use your location to find your legislators. Your location is never shared.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -31,7 +31,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>Calendar event is used so you can instantly add Protest Events to your Calendar</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We use your location to find your representativs. It is never shared with anyone.</string>
+	<string>We use your location to find your legislators. Your location is never shared.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
