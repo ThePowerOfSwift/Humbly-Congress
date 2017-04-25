@@ -14,6 +14,7 @@
 		1D97C7E81E8EB71200D3A46C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7E71E8EB71200D3A46C /* Message.swift */; };
 		1D97C7EA1E8EBE0C00D3A46C /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */; };
 		1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */; };
+		1DD68E681EAD6CB800CDEAA7 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */; };
 		1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		1D97C7E71E8EB71200D3A46C /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventChecker.swift; sourceTree = "<group>"; };
+		1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */,
+				1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */,
 				1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */,
 				1D97C7E71E8EB71200D3A46C /* Message.swift */,
 				1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD68E681EAD6CB800CDEAA7 /* HomeTableViewController.swift in Sources */,
 				1D97C7E81E8EB71200D3A46C /* Message.swift in Sources */,
 				1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */,
 				1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */,
