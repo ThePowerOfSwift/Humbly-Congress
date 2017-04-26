@@ -15,6 +15,7 @@
 		1D97C7EA1E8EBE0C00D3A46C /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */; };
 		1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */; };
 		1DD68E681EAD6CB800CDEAA7 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */; };
+		1DD68E6D1EB04D0A00CDEAA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD68E6C1EB04D0A00CDEAA7 /* DetailViewController.swift */; };
 		1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */; };
 		B7B6E79DBF477C9723C5C847 /* Pods_Humbly_Congress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33148F4CEDE863FC6C60913 /* Pods_Humbly_Congress.framework */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,8 @@
 		1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventChecker.swift; sourceTree = "<group>"; };
 		1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		1DD68E691EB0466200CDEAA7 /* Humbly Congress-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Humbly Congress-Bridging-Header.h"; sourceTree = "<group>"; };
+		1DD68E6C1EB04D0A00CDEAA7 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianTableViewController.swift; sourceTree = "<group>"; };
 		4D7EC8999AA5670B997E2610 /* Pods-Humbly Congress.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Humbly Congress.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Humbly Congress/Pods-Humbly Congress.debug.xcconfig"; sourceTree = "<group>"; };
 		B33148F4CEDE863FC6C60913 /* Pods_Humbly_Congress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Humbly_Congress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +74,7 @@
 			children = (
 				1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */,
 				1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */,
+				1DD68E6C1EB04D0A00CDEAA7 /* DetailViewController.swift */,
 				1D97C7E91E8EBE0C00D3A46C /* EventTableViewController.swift */,
 				1D97C7E71E8EB71200D3A46C /* Message.swift */,
 				1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */,
@@ -79,6 +83,7 @@
 				1D97C7DA1E8EAF2B00D3A46C /* Assets.xcassets */,
 				1D97C7DC1E8EAF2B00D3A46C /* LaunchScreen.storyboard */,
 				1D97C7DF1E8EAF2B00D3A46C /* Info.plist */,
+				1DD68E691EB0466200CDEAA7 /* Humbly Congress-Bridging-Header.h */,
 			);
 			path = "Humbly Congress";
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 					1D97C7CF1E8EAF2B00D3A46C = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = 7C38QD972W;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -230,6 +236,7 @@
 				1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */,
 				1D97C7EA1E8EBE0C00D3A46C /* EventTableViewController.swift in Sources */,
 				1D97C7D41E8EAF2B00D3A46C /* AppDelegate.swift in Sources */,
+				1DD68E6D1EB04D0A00CDEAA7 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,12 +362,15 @@
 			baseConfigurationReference = 4D7EC8999AA5670B997E2610 /* Pods-Humbly Congress.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7C38QD972W;
 				INFOPLIST_FILE = "Humbly Congress/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.HumblyHuman.Humbly-Congress";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Humbly Congress/Humbly Congress-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -371,12 +381,14 @@
 			baseConfigurationReference = B552B3CAED8C271DAE57E680 /* Pods-Humbly Congress.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7C38QD972W;
 				INFOPLIST_FILE = "Humbly Congress/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.HumblyHuman.Humbly-Congress";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Humbly Congress/Humbly Congress-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

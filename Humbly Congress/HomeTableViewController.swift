@@ -33,8 +33,14 @@ class HomeTableViewController: UITableViewController {
     }
     
     var representatives = [String]()
+    var repPortraitURLLinks = [String]()
+    var repParty = [String]()
+    
     
     var senators = [String]()
+    var senatePortraitURLLinks = [String]()
+    var senateParty = [String]()
+    
 
     
     
@@ -80,7 +86,20 @@ class HomeTableViewController: UITableViewController {
                                                 }
                                                 
                                             }
-
+                                            
+                                            //now do images.
+                                            if let linkForImage = member["id"] as? String {
+                                                
+                                                self.repPortraitURLLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
+                                            
+                                            }
+                                            
+                                            //now do party (used for background cell image)
+                                            if let politicalParty = member["party"] as? String {
+                                            
+                                                self.repParty.append(politicalParty)
+                                            }
+                                            
                                         }
                                     }
 
@@ -147,6 +166,19 @@ class HomeTableViewController: UITableViewController {
                                             
                                         }
                                         
+                                        //now do images.
+                                        if let linkForImage = member["id"] as? String {
+                                            
+                                            self.senatePortraitURLLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
+                                            
+                                        }
+                                        
+                                        //now do party (used for background cell image)
+                                        if let politicalParty = member["party"] as? String {
+                                            
+                                            self.senateParty.append(politicalParty)
+                                        }
+                                        
                                     }
                                 }
                                 
@@ -202,43 +234,96 @@ class HomeTableViewController: UITableViewController {
         }
     }
     
-
+    
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as UITableViewCell!
         
+        let imageView = cell?.viewWithTag(1) as! UIImageView
+        
+        //make imageview circular
+        imageView.layer.borderWidth = 1
+        imageView.layer.masksToBounds = false
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.cornerRadius = imageView.frame.width/2
+        imageView.clipsToBounds = true
+        
         
         
         if(houseOrSenate.selectedSegmentIndex == 0) {
             
             let representativesName = self.representatives[indexPath.row]
+            
+            let colorOfCell = self.repParty[indexPath.row]
         
         
             if let legislatorCell = cell as? individualCell {
             
                 legislatorCell.nameOfPolitician?.text = representativesName
-            
+                
+                if (colorOfCell == "R") {
+                    
+                    legislatorCell.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
+                
+                } else  {
+                    
+                    legislatorCell.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
+
+                }
+                
+                imageView.sd_setImage(with: URL(string: repPortraitURLLinks[indexPath.row]))
+
             }
+            
         } else {
             
             let senatorName = self.senators[indexPath.row]
             
+            let colorOfCell = self.senateParty[indexPath.row]
+
             
             if let legislatorCell = cell as? individualCell {
                 
                 legislatorCell.nameOfPolitician?.text = senatorName
                 
+                if (colorOfCell == "R") {
+                    
+                    legislatorCell.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
+                    
+                } else  {
+                    
+                    legislatorCell.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
+                    
+                }
+                
+                imageView.sd_setImage(with: URL(string: senatePortraitURLLinks[indexPath.row]))
+                
             }
         
         }
         
-
+        
+        
        return cell!
     }
     
     
+    /*
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as UITableViewCell!
+        
+        
+
+        
+        //let vc = storyboard?.instantiateViewController(withIdentifier: "Detail")
+        
+        //self.navigationController?.pushViewController(vc!, animated: true)
+    }
+   */
     /*
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
@@ -282,14 +367,28 @@ class HomeTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        let indexPath = self.tableView.indexPathForSelectedRow! as NSIndexPath
+        
+        let detailedController = segue.destination as! DetailViewController
+        
+        
+        if(houseOrSenate.selectedSegmentIndex == 0) {
+            detailedController.myName = self.representatives[indexPath.row]
+        
+        }
+        
+        else {
+            
+            detailedController.myName = self.senators[indexPath.row]
+        }
+        
     }
-    */
+    
 
 }
