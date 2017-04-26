@@ -16,6 +16,7 @@
 		1D97C7EC1E8EC25B00D3A46C /* eventChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */; };
 		1DD68E681EAD6CB800CDEAA7 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */; };
 		1DE5EF851E8EC5C100A32C9A /* PoliticianTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */; };
+		B7B6E79DBF477C9723C5C847 /* Pods_Humbly_Congress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B33148F4CEDE863FC6C60913 /* Pods_Humbly_Congress.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,9 @@
 		1D97C7EB1E8EC25B00D3A46C /* eventChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = eventChecker.swift; sourceTree = "<group>"; };
 		1DD68E671EAD6CB800CDEAA7 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		1DE5EF841E8EC5C100A32C9A /* PoliticianTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoliticianTableViewController.swift; sourceTree = "<group>"; };
+		4D7EC8999AA5670B997E2610 /* Pods-Humbly Congress.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Humbly Congress.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Humbly Congress/Pods-Humbly Congress.debug.xcconfig"; sourceTree = "<group>"; };
+		B33148F4CEDE863FC6C60913 /* Pods_Humbly_Congress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Humbly_Congress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B552B3CAED8C271DAE57E680 /* Pods-Humbly Congress.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Humbly Congress.release.xcconfig"; path = "Pods/Target Support Files/Pods-Humbly Congress/Pods-Humbly Congress.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7B6E79DBF477C9723C5C847 /* Pods_Humbly_Congress.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +53,8 @@
 			children = (
 				1D97C7D21E8EAF2B00D3A46C /* Humbly Congress */,
 				1D97C7D11E8EAF2B00D3A46C /* Products */,
+				253AE9C54B9111BD7A9FD38A /* Pods */,
+				2E5C0CEE7D51D0725414B2BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,6 +83,23 @@
 			path = "Humbly Congress";
 			sourceTree = "<group>";
 		};
+		253AE9C54B9111BD7A9FD38A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4D7EC8999AA5670B997E2610 /* Pods-Humbly Congress.debug.xcconfig */,
+				B552B3CAED8C271DAE57E680 /* Pods-Humbly Congress.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		2E5C0CEE7D51D0725414B2BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B33148F4CEDE863FC6C60913 /* Pods_Humbly_Congress.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,9 +107,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D97C7E21E8EAF2B00D3A46C /* Build configuration list for PBXNativeTarget "Humbly Congress" */;
 			buildPhases = (
+				C99FF65D9B24A170E627292D /* [CP] Check Pods Manifest.lock */,
 				1D97C7CC1E8EAF2B00D3A46C /* Sources */,
 				1D97C7CD1E8EAF2B00D3A46C /* Frameworks */,
 				1D97C7CE1E8EAF2B00D3A46C /* Resources */,
+				BD64B409844D0B4014EBA93E /* [CP] Embed Pods Frameworks */,
+				AE187C758E61BCF5412DBEB8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -143,6 +170,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AE187C758E61BCF5412DBEB8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Humbly Congress/Pods-Humbly Congress-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD64B409844D0B4014EBA93E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Humbly Congress/Pods-Humbly Congress-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C99FF65D9B24A170E627292D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D97C7CC1E8EAF2B00D3A46C /* Sources */ = {
@@ -277,6 +352,7 @@
 		};
 		1D97C7E31E8EAF2B00D3A46C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D7EC8999AA5670B997E2610 /* Pods-Humbly Congress.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -292,6 +368,7 @@
 		};
 		1D97C7E41E8EAF2B00D3A46C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B552B3CAED8C271DAE57E680 /* Pods-Humbly Congress.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
