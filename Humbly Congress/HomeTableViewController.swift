@@ -40,6 +40,19 @@ class HomeTableViewController: UITableViewController {
     var senators = [String]()
     var senateLinks = [String]()
     var senateParty = [String]()
+    
+    
+    
+    func canOpenURL(string: String?) -> Bool {
+        guard let urlString = string else {return false}
+        guard let url = NSURL(string: urlString) else {return false}
+        if !UIApplication.shared.canOpenURL(url as URL) {return false}
+        
+        //
+        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
+        return predicate.evaluate(with: string)
+    }
 
 
     
@@ -106,7 +119,6 @@ class HomeTableViewController: UITableViewController {
 
                                 }
                             }
-                            print(self.representatives)
 
                         }
                         catch {
@@ -185,7 +197,8 @@ class HomeTableViewController: UITableViewController {
                                 
                             }
                         }
-                        
+                        print(self.senators)
+
                     }
                     catch {
                         
@@ -275,7 +288,9 @@ class HomeTableViewController: UITableViewController {
 
                 }
                 
-                imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]))
+                //imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]))
+               // imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+                imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
 
             }
             
@@ -300,7 +315,26 @@ class HomeTableViewController: UITableViewController {
                     
                 }
                 
-                imageView.sd_setImage(with: URL(string: senateLinks[indexPath.row]))
+                //imageView.sd_setImage(with: URL(string: senateLinks[indexPath.row]))
+                
+                imageView.sd_setImage(with: URL(string: senateLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+
+                //there are two images that are nil, so just fill them with fake images to avoid a nill exception
+                if indexPath.row == 46 {
+                    imageView.sd_setImage(with: URL(string: self.senateLinks[1]))
+                }
+                else if indexPath.row == 88 {
+                    imageView.sd_setImage(with: URL(string: self.senateLinks[1]))
+                }
+                else {
+                    imageView.sd_setImage(with: URL(string: self.senateLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+                }
+                
+                /*
+                if(senators[indexPath.row] != "Margaret Hassan") {
+                    imageView.sd_setImage(with: URL(string: self.senateLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+                }
+                 */
                 
             }
         

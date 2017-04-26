@@ -154,9 +154,13 @@ class DetailViewController: UIViewController {
 
         
         legislatorName.text = myName
-        
+        print(fecNumber)
+
         
         portrait.sd_setImage(with: URL(string: bioGuide))
+        portrait.sd_setImage(with: URL(string: bioGuide), placeholderImage: #imageLiteral(resourceName: "iCon"))
+        
+        
         portrait.layer.borderWidth = 1
         portrait.layer.masksToBounds = false
         portrait.layer.borderColor = UIColor.white.cgColor
