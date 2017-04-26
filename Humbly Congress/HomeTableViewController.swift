@@ -33,14 +33,14 @@ class HomeTableViewController: UITableViewController {
     }
     
     var representatives = [String]()
-    var repPortraitURLLinks = [String]()
+    var repLinks = [String]()
     var repParty = [String]()
     
     
     var senators = [String]()
-    var senatePortraitURLLinks = [String]()
+    var senateLinks = [String]()
     var senateParty = [String]()
-    
+
 
     
     
@@ -90,7 +90,7 @@ class HomeTableViewController: UITableViewController {
                                             //now do images.
                                             if let linkForImage = member["id"] as? String {
                                                 
-                                                self.repPortraitURLLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
+                                                self.repLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
                                             
                                             }
                                             
@@ -99,6 +99,7 @@ class HomeTableViewController: UITableViewController {
                                             
                                                 self.repParty.append(politicalParty)
                                             }
+                                            
                                             
                                         }
                                     }
@@ -169,7 +170,7 @@ class HomeTableViewController: UITableViewController {
                                         //now do images.
                                         if let linkForImage = member["id"] as? String {
                                             
-                                            self.senatePortraitURLLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
+                                            self.senateLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
                                             
                                         }
                                         
@@ -274,7 +275,7 @@ class HomeTableViewController: UITableViewController {
 
                 }
                 
-                imageView.sd_setImage(with: URL(string: repPortraitURLLinks[indexPath.row]))
+                imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]))
 
             }
             
@@ -299,7 +300,7 @@ class HomeTableViewController: UITableViewController {
                     
                 }
                 
-                imageView.sd_setImage(with: URL(string: senatePortraitURLLinks[indexPath.row]))
+                imageView.sd_setImage(with: URL(string: senateLinks[indexPath.row]))
                 
             }
         
@@ -380,12 +381,15 @@ class HomeTableViewController: UITableViewController {
         
         if(houseOrSenate.selectedSegmentIndex == 0) {
             detailedController.myName = self.representatives[indexPath.row]
-        
+            detailedController.bioGuide = self.repLinks[indexPath.row]
+            
         }
         
         else {
             
             detailedController.myName = self.senators[indexPath.row]
+            detailedController.bioGuide = self.senateLinks[indexPath.row]
+
         }
         
     }
