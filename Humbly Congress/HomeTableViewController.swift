@@ -43,6 +43,25 @@ class HomeTableViewController: UITableViewController {
     
     
     
+    //these bottom vars will be used for segue.
+    
+    var repID = [String]()
+    var repState = [String]()
+    var repElection = [String]()
+    var repMissedVotes = [String]()
+    var repPartyVotes = [String]()
+    var repPhoneNumber = [String]()
+
+    var senatorID = [String]()
+    var senateState = [String]()
+    var senateElection = [String]()
+    var senateMissedVotes = [String]()
+    var senatePartyVotes = [String]()
+    var senatePhoneNumber = [String]()
+
+    
+    
+    
     func canOpenURL(string: String?) -> Bool {
         guard let urlString = string else {return false}
         guard let url = NSURL(string: urlString) else {return false}
@@ -104,6 +123,8 @@ class HomeTableViewController: UITableViewController {
                                             if let linkForImage = member["id"] as? String {
                                                 
                                                 self.repLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
+                                                
+                                                self.repID.append(linkForImage)
                                             
                                             }
                                             
@@ -113,6 +134,38 @@ class HomeTableViewController: UITableViewController {
                                                 self.repParty.append(politicalParty)
                                             }
                                             
+                                            //now do phone number
+                                            if let number = member["phone"] as? String {
+                                                
+                                                self.repPhoneNumber.append(number)
+                                            }
+                                            
+                                            
+                                            //now do election
+                                            if let electionYear = member["next_election"] as? String {
+                                                
+                                                self.repElection.append(electionYear)
+                                            }
+                                            
+                                            
+                                            //now do state initial
+                                            if let stateFrom = member["state"] as? String {
+                                                
+                                                self.repState.append(stateFrom)
+                                            }
+                                            
+                                            //now do missed votes
+                                            if let missedVotes = member["missed_votes_pct"] as? String {
+                                                
+                                                self.repMissedVotes.append(missedVotes)
+                                            }
+                                            
+                                            
+                                            //now do party alliegence
+                                            if let votesWithParty = member["votes_with_party_pct"] as? String {
+                                                
+                                                self.repPartyVotes.append(votesWithParty)
+                                            }
                                             
                                         }
                                     }
@@ -184,6 +237,8 @@ class HomeTableViewController: UITableViewController {
                                             
                                             self.senateLinks.append("https://theunitedstates.io/images/congress/450x550/" + linkForImage + ".jpg")
                                             
+                                            self.senatorID.append(linkForImage)
+                                            
                                         }
                                         
                                         //now do party (used for background cell image)
@@ -192,12 +247,45 @@ class HomeTableViewController: UITableViewController {
                                             self.senateParty.append(politicalParty)
                                         }
                                         
+                                        //now do phone number
+                                        if let number = member["phone"] as? String {
+                                            
+                                            self.senatePhoneNumber.append(number)
+                                        }
+                                        
+                                        //now do election
+                                        if let electionYear = member["next_election"] as? String {
+                                            
+                                            self.senateElection.append(electionYear)
+                                        }
+                                        
+                                        
+                                        //now do state initial
+                                        if let stateFrom = member["state"] as? String {
+                                            
+                                            self.senateState.append(stateFrom)
+                                        }
+                                        
+                                        //now do missed votes
+                                        if let missedVotes = member["missed_votes_pct"] as? String {
+                                            
+                                            self.senateMissedVotes.append(missedVotes)
+                                        }
+                                        
+                                        
+                                        //now do party alliegence
+                                        if let votesWithParty = member["votes_with_party_pct"] as? String {
+                                            
+                                            self.senatePartyVotes.append(votesWithParty)
+                                        }
+
+                                        
                                     }
                                 }
                                 
                             }
                         }
-                        print(self.senators)
+                        //print(self.senators)
 
                     }
                     catch {
@@ -288,8 +376,6 @@ class HomeTableViewController: UITableViewController {
 
                 }
                 
-                //imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]))
-               // imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
                 imageView.sd_setImage(with: URL(string: repLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
 
             }
@@ -330,11 +416,7 @@ class HomeTableViewController: UITableViewController {
                     imageView.sd_setImage(with: URL(string: self.senateLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
                 }
                 
-                /*
-                if(senators[indexPath.row] != "Margaret Hassan") {
-                    imageView.sd_setImage(with: URL(string: self.senateLinks[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
-                }
-                 */
+               
                 
             }
         
@@ -348,17 +430,30 @@ class HomeTableViewController: UITableViewController {
     
     /*
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as UITableViewCell!
         
         
+        if(houseOrSenate.selectedSegmentIndex == 0) {
+            //performSegue(withIdentifier: "reuseIdentifier", sender: self.representatives[indexPath.row])
+            
+            performSegue(withIdentifier: "reuseIdentifier", sender: self.repLinks[indexPath.row])
+            
+        }
+            
+        else {
+            
+            //performSegue(withIdentifier: "reuseIdentifier", sender:  self.senators[indexPath.row])
+            performSegue(withIdentifier: "reuseIdentifier", sender:  self.senateLinks[indexPath.row])
+            
+        }
 
         
         //let vc = storyboard?.instantiateViewController(withIdentifier: "Detail")
         
         //self.navigationController?.pushViewController(vc!, animated: true)
     }
-   */
+   
+    */
+    
     /*
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
@@ -413,16 +508,32 @@ class HomeTableViewController: UITableViewController {
         let detailedController = segue.destination as! DetailViewController
         
         
+        
         if(houseOrSenate.selectedSegmentIndex == 0) {
             detailedController.myName = self.representatives[indexPath.row]
             detailedController.bioGuide = self.repLinks[indexPath.row]
+            detailedController.idNumber = self.repID[indexPath.row]
             
+            detailedController.stateInitial = self.repState[indexPath.row]
+            detailedController.electionCycle = self.repElection[indexPath.row]
+            detailedController.missedVotes = self.repMissedVotes[indexPath.row]
+            detailedController.partyVotes = self.repPartyVotes[indexPath.row]
+            detailedController.phoneNumber = self.repPhoneNumber[indexPath.row]
+            detailedController.color = self.repParty[indexPath.row]
         }
         
         else {
             
             detailedController.myName = self.senators[indexPath.row]
             detailedController.bioGuide = self.senateLinks[indexPath.row]
+            detailedController.idNumber = self.senatorID[indexPath.row]
+
+            detailedController.stateInitial = self.senateState[indexPath.row]
+            detailedController.electionCycle = self.senateElection[indexPath.row]
+            detailedController.missedVotes = self.senateMissedVotes[indexPath.row]
+            detailedController.partyVotes = self.senatePartyVotes[indexPath.row]
+            detailedController.phoneNumber = self.senatePhoneNumber[indexPath.row]
+            detailedController.color = self.senateParty[indexPath.row]
 
         }
         

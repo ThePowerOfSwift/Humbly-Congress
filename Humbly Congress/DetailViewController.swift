@@ -19,7 +19,13 @@ class DetailViewController: UIViewController {
     
     @IBOutlet var numberForCalling: UIButton!
     
+    
     @IBAction func call(_ sender: UIButton) {
+        
+        if let url = URL(string: phoneNumber) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
     }
     
     
@@ -42,26 +48,34 @@ class DetailViewController: UIViewController {
     
     
     
+    var stateInitial = String()
+    var electionCycle = String()
+    var missedVotes = String()
+    var partyVotes = String()
     
+    var phoneNumber = String()
     
     
     var myName = String()
     
     var bioGuide = String()
     
-    
-    
+    var idNumber = String()
     
     var fecNumber = String()
-        
+    
+    var color = String()
     
     
+    var donors = String()
+    var individuals = String()
+    var pacs = String()
     
-    func getData() {
+    func getFECid() {
         
         //create the url needd for parsing.
         
-        let urlForJSON = "https://api.propublica.org/congress/v1/members/" + bioGuide + ".json"
+        let urlForJSON = "https://api.propublica.org/congress/v1/members/" + idNumber + ".json"
         
         
         //now that we constructed the url, morph it to a actual URL type
@@ -90,39 +104,10 @@ class DetailViewController: UIViewController {
                                     
                                     for role in roles {
                                         
-                                        if let stateInitial = role["state"] as? String {
-                                            
-                                            self.state.text = "State: " + stateInitial
-                                        }
-                                        
-                                        //now do images.
                                         if let fecID = role["fec_candidate_id"] as? String {
                                             
                                             self.fecNumber = fecID
-                                        }
-                                        
-                                        //now do end date for term
-                                        if let matchedVotes = role["end_date"] as? String {
-                                            
-                                            self.nextElection.text = "End of Term: " + matchedVotes
-                                        }
-                                        
-                                        //now do party (used for background cell image)
-                                        if let number = role["phone"] as? String {
-
-                                            self.numberForCalling.setTitle(number, for: .normal)
-                                        }
-                                        
-                                        //now do missed votes
-                                        if let missedVotes = role["missed_votes_pct"] as? String {
-                                        
-                                            self.percentAbsent.text = "% of times absent for a vote: " + missedVotes
-                                        }
-                                        
-                                        //now do matched votes with party
-                                        if let matchedVotes = role["votes_with_party_pct"] as? String {
-                                            
-                                            self.percentPartyMatch.text = "Total sum from PACS: " + matchedVotes
+                                            print(fecID)
                                         }
                                         
                                     }
@@ -142,19 +127,116 @@ class DetailViewController: UIViewController {
         task.resume()
         
     }
-
+        
     
+    
+    func getData() {
+        
+        //create the url needd for parsing.
+        
+        let urlForJSON = "https://api.propublica.org/campaign-finance/v1/2016/candidates/" + fecNumber + ".json"
+        
+        
+        //now that we constructed the url, morph it to a actual URL type
+        let url = URL(string: urlForJSON)
+        
+        //send server the API key
+        let request = NSMutableURLRequest(url: url!)
+        request.setValue("AzuJWcFuUg3f0iLuL5zrl5M8RExaka469UWE81df", forHTTPHeaderField: "X-API-Key" )
+        request.httpMethod = "GET"
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("ERROR")
+            }
+            else {
+                print("parsing")
+                if let content = data {
+                    do {
+                        let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+                        
+                        if let results = JSON["results"] as? [[String: Any]] {
+                            for result in results {
+                                
+                                //get total number of donors
+                                if let total = result["total_receipts"] as? String {
+                                    self.donors = total
+                                    print(total)
+                                }
+                            
+                                //get money from donors
+                                if let indv = result["total_from_individuals"] as? String {
+                                    self.individuals = indv
+                                }
+                                
+                                //get money from PACS
+                                if let pac = result["total_from_pacs"] as? String {
+                                    self.pacs = pac
+                                }
+                                
+                                
+                            }
+                        }
+                        
+                    }
+                    catch {
+                        
+                    }
+                }
+            }
+            
+        }
+        task.resume()
+        
+    }
+
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        getFECid()
+        
         getData()
+        
 
         
+        if(color == "R") {
+            self.view.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
+        }
+        else  {
+            self.view.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
+        }
+        
+        
+        
         legislatorName.text = myName
-        print(fecNumber)
+        
+        self.navigationItem.title = myName
+        
+        
+        state.text = "State: " + stateInitial
+
+        nextElection.text = "Next Election: " + electionCycle
+        
+        percentAbsent.text = "% Missed Votes: " + missedVotes
+        
+        percentPartyMatch.text = "% Voted With Party: " + partyVotes
+        
+        
+        numberForCalling.setTitle("Office: " + phoneNumber, for: .normal)
+        
+        
+        
+        //now do finance section
+        sumIndividuals.text = "Money from Individual Donors: " + individuals
+        
+        sumPACS.text = "Money from PACS: " + pacs
+        
+        
 
         
         portrait.sd_setImage(with: URL(string: bioGuide))
