@@ -1,47 +1,53 @@
 //
-//  DetailViewController.swift
+//  PoliticianInfoTableViewController.swift
 //  Humbly Congress
 //
-//  Created by Parankush Bhardwaj on 4/25/17.
+//  Created by Parankush Bhardwaj on 5/1/17.
 //  Copyright © 2017 Parankush Bhardwaj. All rights reserved.
 //
 
 import UIKit
 
-class DetailViewController: UIViewController {
-    
+class Legislator: UITableViewCell {
+
     
     @IBOutlet var portrait: UIImageView!
     
-    
-    @IBOutlet var numberForCalling: UIButton!
-    
-    
+    var phoneNumber = String()
+
     @IBAction func call(_ sender: UIButton) {
-        
         if let url = URL(string: phoneNumber) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-        
     }
     
+    @IBOutlet var numberToCall: UIButton!
     
     @IBOutlet var state: UILabel!
+    
     
     @IBOutlet var nextElection: UILabel!
     
     
     
+    
     @IBOutlet var percentAbsent: UILabel!
+    
     
     @IBOutlet var percentPartyMatch: UILabel!
     
     
-    
-    
     @IBOutlet var sumIndividuals: UILabel!
     
-    @IBOutlet var sumPACS: UILabel!
+    
+    @IBOutlet var sumPacs: UILabel!
+    
+    
+
+}
+
+class PoliticianInfoTableViewController: UITableViewController {
+    
     
     
     
@@ -117,6 +123,7 @@ class DetailViewController: UIViewController {
                     catch {
                         
                     }
+                    self.tableView.reloadData()
                 }
             }
             
@@ -124,7 +131,7 @@ class DetailViewController: UIViewController {
         task.resume()
         
     }
-        
+    
     
     
     func getData() {
@@ -153,20 +160,17 @@ class DetailViewController: UIViewController {
                     do {
                         let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
-                        print("hi")
                         if let results = JSON["results"] as? [[String: Any]] {
                             
                             print("working")
                             for result in results {
                                 
-                                print("working2")
                                 //get total number of donors
                                 if let total = result["total_receipts"] as? Double {
-                                    print("working3")
                                     self.donors = total
                                     print(total)
                                 }
-                            
+                                
                                 //get money from donors
                                 if let indv = result["total_from_individuals"] as? Double {
                                     self.individuals = indv
@@ -186,6 +190,7 @@ class DetailViewController: UIViewController {
                     catch {
                         
                     }
+                    self.tableView.reloadData()
                 }
             }
             
@@ -194,8 +199,6 @@ class DetailViewController: UIViewController {
         
     }
 
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,57 +208,120 @@ class DetailViewController: UIViewController {
         
         getData()
         
-        
-        
+
+        self.navigationItem.title = myName
+
         if(color == "R") {
             self.view.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
         }
         else  {
             self.view.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
         }
-        
-        
-        self.navigationItem.title = myName
-        
-        
-        state.text = "State: " + stateInitial
 
-        nextElection.text = "Next Election: " + electionCycle
-        
-        percentAbsent.text = "% Missed Votes: " + missedVotes
-        
-        percentPartyMatch.text = "% Voted With Party: " + partyVotes
         
         
-        numberForCalling.setTitle("Call Office", for: .normal)
-        
-        
-        
-        //now do finance section
-        sumIndividuals.text = "Money from Individual Donors: $\(individuals) "
-        
-        sumPACS.text = "Money from PACS: $\(pacs)"
-        
-        
-        portrait.sd_setImage(with: URL(string: bioGuide))
-        portrait.sd_setImage(with: URL(string: bioGuide), placeholderImage: #imageLiteral(resourceName: "iCon"))
-        
-        
-        portrait.layer.borderWidth = 1
-        portrait.layer.masksToBounds = false
-        portrait.layer.borderColor = UIColor.white.cgColor
-        portrait.layer.cornerRadius = portrait.frame.width/2
-        portrait.clipsToBounds = true
-        
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 1
+    }
+
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "one", for: indexPath)
+        
+        let imageView = cell.viewWithTag(1) as! UIImageView
+
+        //make imageview circular
+        imageView.layer.borderWidth = 1
+        imageView.layer.masksToBounds = false
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.cornerRadius = imageView.frame.width/2
+        imageView.clipsToBounds = true
+
+
+        // Configure the cell...
+        
+        if let view = cell as? Legislator {
+            
+            
+            view.state.text = "State: " + stateInitial
+            
+            view.nextElection.text = "Next Election: " + electionCycle
+            
+            view.percentAbsent.text = "% Missed Votes: " + missedVotes
+            
+            view.percentPartyMatch.text = "% Voted With Party: " + partyVotes
+            
+            
+            view.numberToCall.setTitle("Call Office", for: .normal)
+            
+            
+            
+            //now do finance section
+            view.sumIndividuals.text = "Money from Individual Donors: $\(individuals) "
+            
+            view.sumPacs.text = "Money from PACS: $\(pacs)"
+            
+            
+            
+            //now do image
+            view.portrait.sd_setImage(with: URL(string: bioGuide), placeholderImage: #imageLiteral(resourceName: "iCon"))
+            
+        }
+
+
+        return cell
+    }
+    
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
+    /*
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
 
     
     // MARK: - Navigation
@@ -272,3 +338,40 @@ class DetailViewController: UIViewController {
     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

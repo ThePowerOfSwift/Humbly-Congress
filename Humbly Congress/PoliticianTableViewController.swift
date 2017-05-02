@@ -19,17 +19,15 @@ class Politician: UITableViewCell {
     
     @IBOutlet weak var name: UILabel!
     
-    
-    @IBOutlet var number: UILabel!
-    
-    
-    @IBAction func call(_ sender: UIButton) {
-        print("calling")
         
-        if let url = URL(string: number.text!) {
+    @IBAction func call(_ sender: UIButton) {
+        if let url = URL(string: officePhone) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    
+    
+    var officePhone = String()
     
 }
 
@@ -56,8 +54,9 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         } else {
             print("Not allowed to fax.")
         }
-        
+
     }
+    
     
     
     
@@ -65,38 +64,31 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     //put in a default random one
     //var zipcode: String = "33328"
     
-    var nameOfThePolitician = " "
-    
     
     @IBOutlet var politicianTableView: UITableView!
     
    
     
+    var numbers = [String]()
+    
+    var names = [String]()
+    
+    var links = [String]()
+    
+    var bioguides = [String]()
+
+    var parties = [String]()
     
     
+    var absentPercentages = [String]()
     
-    var numbers = [" "," "," "]
+    var partyVotes = [String]()
     
-    var names = [" "," "," "]
-    
-    
-    
-    
-    var imageURLs = [ "https://theunitedstates.io/images/congress/original/",
-                      "https://theunitedstates.io/images/congress/original/",
-                      "https://theunitedstates.io/images/congress/original/"]
-    
-    var bioguide = [" "," "," "]
-    
-    var imageView = [UIImage(), UIImage(), UIImage()]
-    
-    var imageCounter = 0
-    
-    var counter = 0
-    
+    var states = [String]()
+
+    var elections = [String]()
     
     //get your location.
-    
     
     let locationManager = CLLocationManager()
     
@@ -105,28 +97,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
 
     
     
-    
-    
-    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
-        URLSession.shared.dataTask(with: url) {
-            (data, response, error) in
-            completion(data, response, error)
-            }.resume()
-    }
-    
-    
-    func downloadImage(url: URL) {
-        print("Download Started")
-        getDataFromUrl(url: url) { (data, response, error)  in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() { () -> Void in
-                self.imageView[self.counter] = UIImage(data: data)!
-                self.counter += 1
-            }
-        }
-    }
-    
-    
+   
     
     func getLocation() {
         
@@ -163,12 +134,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             urlForJSON += longitude
             let url = URL(string: urlForJSON)
         
-            //this counter is created so we can parse the data through the table cell
-            var counterCell = 0
-            imageCounter = 0
-            counter = 0
-
-        
+            
             let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
                 if error != nil {
                     print("ERROR")
@@ -182,40 +148,39 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
                             if let results = JSON["results"] as? [[String: Any]] {
                                 for result in results {
                                 
-                                    //read the title of the politician (senator or representative)
+                                    //read name
                                     if let title = result["title"] as? String {
-                                        self.names[counterCell] = (title)
-                                    }
-                                        //read the first name of the politician
-                                    if let firstName = result["first_name"] as? String {
-                                        self.names[counterCell] += " "
-                                        self.names[counterCell] += firstName
+                                        
+                                        if let firstName = result["first_name"] as? String {
+                                            if let lastName = result["last_name"] as? String {
+                                                self.names.append(title + " " + firstName + " " + lastName)
+                                            }
+
+                                        }
+                                        
                                     }
                                     
-                                    //read the second name of the policitian
-                                    if let lastName = result["last_name"] as? String {
-                                        self.names[counterCell] += " "
-                                        self.names[counterCell] += lastName
-                                    }
-                                
-                                    //now go to numbers
-                                    if let number = result["phone"] as? String {
-                                        var numberWithpreFix = "tel://"
-                                        var realNumber = String()
-                                        realNumber = number.replacingOccurrences(of: "-", with: "")
-                                        numberWithpreFix = numberWithpreFix + realNumber
-                                        self.numbers[counterCell] = numberWithpreFix
-                                    }
-                                
-                                    //now go to bioID (for images)
+                                    //now do images and call getData
                                     if let id = result["bioguide_id"] as? String {
-                                        self.bioguide[counterCell] = id
-                                        self.imageURLs[counterCell] += "\(self.bioguide[counterCell]).jpg"
-                                        let urlA = URL(string: self.imageURLs[counterCell])
-                                        self.downloadImage(url: urlA!)
-                                        self.imageCounter += 1
+                                        
+                                        self.links.append("https://theunitedstates.io/images/congress/450x550/" + id + ".jpg")
+                                        
+                                        self.bioguides.append(id)
+                                        
+                                        self.getData(id: id)
                                     }
-                                    counterCell += 1
+                                    
+                                    //phone number
+                                    if let phone = result["phone"] as? String {
+                                        
+                                        var numberWithpreFix = "tel://"
+                                        let realNumber = phone.replacingOccurrences(of: "-", with: "")
+                                        numberWithpreFix = numberWithpreFix + realNumber
+                                        
+                                        self.numbers.append(numberWithpreFix)
+                                    }
+
+                                    
                                 }
                             }
                         }
@@ -228,12 +193,101 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             
             }
             task.resume()
-            
-            counterCell = 0
-            imageCounter = 0
-            counter = 0
         }
     }
+    
+    
+    
+    
+    
+    func getData(id: String) {
+        
+        //create the url needd for parsing.
+        
+        let urlForJSON = "https://api.propublica.org/congress/v1/members/" + id + ".json"
+        
+        //now that we constructed the url, morph it to a actual URL type
+        let url = URL(string: urlForJSON)
+        
+        //send server the API key
+        let request = NSMutableURLRequest(url: url!)
+        request.setValue("AzuJWcFuUg3f0iLuL5zrl5M8RExaka469UWE81df", forHTTPHeaderField: "X-API-Key" )
+        request.httpMethod = "GET"
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                //print("ERROR")
+            }
+            else {
+                //print("parsing")
+                if let content = data {
+                    do {
+                        let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+                        
+                        if let results = JSON["results"] as? [[String: Any]] {
+                            for result in results {
+                                
+                                if let roles = result["roles"] as? [[String: Any]] {
+                                    
+                                    for role in roles {
+                                        
+                                        //missed votes
+                                        if let missedVotes = role["missed_votes_pct"] as? String {
+                                            
+                                            self.absentPercentages.append(missedVotes)
+                                        }
+                                        
+                                        //votes aligned with party majority
+                                        if let partyAllegiance = role["votes_with_party_pct"] as? String {
+                                            
+                                            self.partyVotes.append(partyAllegiance)
+                                        }
+                                        
+                                        //now do party.
+                                        if let party = role["party"] as? String {
+                                            
+                                            self.parties.append(party)
+                                            
+                                        }
+                                        
+                                        //now do state initial
+                                        if let stateFrom = role["state"] as? String {
+                                            
+                                            self.states.append(stateFrom)
+                                            
+                                        }
+                                        
+                                        //now do election cycle
+                                        if let nextElection = role["end_date"] as? String {
+                                            
+                                            self.elections.append(nextElection)
+                                            
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                        
+                    }
+                    catch {
+                        
+                    }
+                }
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+
+    
+    
+    
+    
+    
     
     
     var counterForDispatch = 0
@@ -241,11 +295,6 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        //for debugging reasons, reinit counters to 0
-        counter = 0
-        imageCounter = 0
-        
         
 
         if CLLocationManager.authorizationStatus() != .authorizedAlways     // Check authorization for location tracking
@@ -255,6 +304,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             userLocation = locationManager.location
             getLocation()
             
+            /*
             if(userLocation == nil) {
                 getLocation()
                 
@@ -263,7 +313,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
                 }
                 
             }
-            
+            */
 
             if counterForDispatch < 500 {
                 DispatchQueue.main.async {
@@ -275,7 +325,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         } else {
             locationManager.startUpdatingLocation()
             userLocation = locationManager.location
-            
+            getLocation()
         }
         
         
@@ -283,99 +333,6 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         locationManager.delegate = self
         userLocation = locationManager.location
 
-        
-        
-        
-        if userLocation != nil {
-            
-            userLocation = CLLocationManager().location!
-            
-            let latitude = "\(String(describing: userLocation!.coordinate.latitude))"
-            let longitude = "\(String(describing: userLocation!.coordinate.longitude))"
-            
-            print(latitude)
-            print(longitude)
-            
-            
-            //next, use that location to create a link that uses an API to get the user's representatives.
-            var urlForJSON = "https://congress.api.sunlightfoundation.com/legislators/locate?latitude="
-            urlForJSON += latitude
-            urlForJSON += "&longitude="
-            urlForJSON += longitude
-            let url = URL(string: urlForJSON)
-            
-            //this counter is created so we can parse the data through the table cell
-            var counterCell = 0
-            
-            
-            let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                if error != nil {
-                    print("ERROR")
-                }
-                else {
-                    print("pasring")
-                    if let content = data {
-                        do {
-                            let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                            
-                            if let results = JSON["results"] as? [[String: Any]] {
-                                for result in results {
-                                    
-                                    //read the title of the politician (senator or representative)
-                                    if let title = result["title"] as? String {
-                                        self.names[counterCell] = (title)
-                                    }
-                                    //read the first name of the politician
-                                    if let firstName = result["first_name"] as? String {
-                                        self.names[counterCell] += " "
-                                        self.names[counterCell] += firstName
-                                    }
-                                    //read the second name of the policitian
-                                    if let lastName = result["last_name"] as? String {
-                                        self.names[counterCell] += " "
-                                        self.names[counterCell] += lastName
-                                    }
-                                    
-                                    //now go to numbers
-                                    if let number = result["phone"] as? String {
-                                        var numberWithpreFix = "tel://"
-                                        var realNumber = String()
-                                        realNumber = number.replacingOccurrences(of: "-", with: "")
-                                        numberWithpreFix = numberWithpreFix + realNumber
-                                        self.numbers[counterCell] = numberWithpreFix
-                                    }
-                                    
-                                    //now go to bioID (for images)
-                                    if let id = result["bioguide_id"] as? String {
-                                        self.bioguide[counterCell] = id
-                                        
-                                        self.imageURLs[counterCell] += "\(self.bioguide[counterCell]).jpg"
-                                        let urlA = URL(string: self.imageURLs[counterCell])
-                                        //let urlA = URL(string: self.imageURLs[self.imageCounter])
-                                        
-                                        self.downloadImage(url: urlA!)
-                                        
-                                    }
-                                    counterCell += 1
-                                    //self.imageCounter += 1
-                                }
-                            }
-                        }
-                        catch {
-                            
-                        }
-                        self.tableView.reloadData()
-                    }
-                }
-                
-            }
-            task.resume()
-            
-            counterCell = 0
-            imageCounter = 0
-            counter = 0
-
-        }
         
     }
     
@@ -390,42 +347,40 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     }
     
     
-    var helloCounter = 0
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         
         if(userLocation == nil) {
+            
             getLocation()
             
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
         }
-        else if(helloCounter < 2) {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-
-        }
+        
      
         
         
-        //self.tableView.reloadData()
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Politician", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Politician", for: indexPath) as UITableViewCell!
         
         
-        //names = names.sorted { $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedDescending }
+        let imageView = cell?.viewWithTag(1) as! UIImageView
         
-        //below, each new variable grabs a specfic index of its value.
+        //make imageview circular
+        imageView.layer.borderWidth = 1
+        imageView.layer.masksToBounds = false
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.cornerRadius = imageView.frame.width/2
+        imageView.clipsToBounds = true
+
+        
+        
         let nameOfPolitician = self.names[indexPath.row]
         
         let numberToCall = self.numbers[indexPath.row]
         
-        let imageOfPolitician = self.imageView[indexPath.row]
-        
+        let colorOfCell = self.parties[indexPath.row]
+
         
         if let politicianCell = cell as? Politician {
             
@@ -433,25 +388,60 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
             politicianCell.name?.text = nameOfPolitician
             
             
-            //politicianCell.imageOfPolitician.image = UIImage(named: imageOfPolitician)
-            politicianCell.portrait.image = imageOfPolitician
+            politicianCell.officePhone = numberToCall
+
             
-            politicianCell.number?.text = numberToCall
-            
-            //below, we are making the image circular
-            politicianCell.portrait.layer.borderWidth = 1
-            politicianCell.portrait.layer.masksToBounds = false
-            politicianCell.portrait.layer.borderColor = UIColor.white.cgColor
-            politicianCell.portrait.layer.cornerRadius = politicianCell.portrait.frame.width/2
-            politicianCell.portrait.clipsToBounds = true
+            imageView.sd_setImage(with: URL(string: self.links[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+
+            if (colorOfCell == "R") {
+                
+                politicianCell.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
+                
+            } else  {
+                
+                politicianCell.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
+                
+            }
             
         }
         
-        return cell
+        return cell!
         
         
     }
-
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let indexPath = self.tableView.indexPathForSelectedRow! as NSIndexPath
+        
+        let detailedController = segue.destination as! DetailViewController
+        
+        
+        detailedController.myName = self.names[indexPath.row]
+        
+        //bioguide for detail view is the link for image downloads.
+        detailedController.bioGuide = self.links[indexPath.row]
+        
+        //id number for detail view is the id# we insert in a url to download images.
+        detailedController.idNumber = self.bioguides[indexPath.row]
+        
+        
+        detailedController.stateInitial = self.states[indexPath.row]
+        
+        detailedController.electionCycle = self.elections[indexPath.row]
+        
+        detailedController.missedVotes = self.absentPercentages[indexPath.row]
+        
+        detailedController.partyVotes = self.partyVotes[indexPath.row]
+        
+        detailedController.phoneNumber = self.numbers[indexPath.row]
+        
+        detailedController.color = self.parties[indexPath.row]
+        
+        
+    }
+    
     
 }
 

@@ -62,20 +62,6 @@ class HomeTableViewController: UITableViewController {
     
     
     
-    func canOpenURL(string: String?) -> Bool {
-        guard let urlString = string else {return false}
-        guard let url = NSURL(string: urlString) else {return false}
-        if !UIApplication.shared.canOpenURL(url as URL) {return false}
-        
-        //
-        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
-        return predicate.evaluate(with: string)
-    }
-
-
-    
-    
     func getRepData() {
         
             //create the url needd for parsing.
@@ -94,10 +80,10 @@ class HomeTableViewController: UITableViewController {
             
             let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
                 if error != nil {
-                    print("ERROR")
+                    //print("ERROR")
                 }
                 else {
-                    print("parsing")
+                    //print("parsing")
                     if let content = data {
                         do {
                             let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
@@ -106,7 +92,6 @@ class HomeTableViewController: UITableViewController {
                                 for result in results {
                                     
                                     if let members = result["members"] as? [[String: Any]] {
-                                        
                                         for member in members {
                                             
                                             if let firstName = member["first_name"] as? String {
@@ -137,7 +122,12 @@ class HomeTableViewController: UITableViewController {
                                             //now do phone number
                                             if let number = member["phone"] as? String {
                                                 
-                                                self.repPhoneNumber.append(number)
+                                                var numberWithpreFix = "tel://"
+                                                var realNumber = String()
+                                                realNumber = number.replacingOccurrences(of: "-", with: "")
+                                                numberWithpreFix = numberWithpreFix + realNumber
+                                                
+                                                self.repPhoneNumber.append(numberWithpreFix)
                                             }
                                             
                                             
@@ -207,10 +197,10 @@ class HomeTableViewController: UITableViewController {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
-                print("ERROR")
+                //print("ERROR")
             }
             else {
-                print("parsing")
+                //print("parsing")
                 if let content = data {
                     do {
                         let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
@@ -249,8 +239,12 @@ class HomeTableViewController: UITableViewController {
                                         
                                         //now do phone number
                                         if let number = member["phone"] as? String {
+                                            var numberWithpreFix = "tel://"
+                                            var realNumber = String()
+                                            realNumber = number.replacingOccurrences(of: "-", with: "")
+                                            numberWithpreFix = numberWithpreFix + realNumber
                                             
-                                            self.senatePhoneNumber.append(number)
+                                            self.senatePhoneNumber.append(numberWithpreFix)
                                         }
                                         
                                         //now do election
@@ -345,6 +339,9 @@ class HomeTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as UITableViewCell!
         
         let imageView = cell?.viewWithTag(1) as! UIImageView
+        
+        
+        
         
         //make imageview circular
         imageView.layer.borderWidth = 1
