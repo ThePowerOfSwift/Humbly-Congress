@@ -1,14 +1,20 @@
 PODS:
+  - PieCharts (0.0.5)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - TwicketSegmentedControl (0.1.2)
 
 DEPENDENCIES:
+  - PieCharts
   - SDWebImage
+  - TwicketSegmentedControl
 
 SPEC CHECKSUMS:
+  PieCharts: a0fb4784a3460088c8ba7dfb00b89784ddaa7e70
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
 
-PODFILE CHECKSUM: b8ce6e5a6c4159a92673f74d821568d6efed8cb8
+PODFILE CHECKSUM: 8f5c72b9f295f0501655df877b73d5087420f8b7
 
 COCOAPODS: 1.2.0

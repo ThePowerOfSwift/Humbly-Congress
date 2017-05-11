@@ -7,4 +7,9 @@ target 'Humbly Congress' do
 
   pod 'SDWebImage'
 
+  pod 'TwicketSegmentedControl'
+
+  pod 'PieCharts'
+
+
 end

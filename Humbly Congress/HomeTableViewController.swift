@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import TwicketSegmentedControl
+
  
  class individualCell: UITableViewCell {
     
@@ -26,11 +28,12 @@ class HomeTableViewController: UITableViewController {
     @IBOutlet var houseOrSenate: UISegmentedControl!
     
     
-
+    
     @IBAction func switcher(_ sender: UISegmentedControl) {
         
         self.tableView.reloadData()
     }
+    
     
     var representatives = [String]()
     var repLinks = [String]()
@@ -51,6 +54,8 @@ class HomeTableViewController: UITableViewController {
     var repMissedVotes = [String]()
     var repPartyVotes = [String]()
     var repPhoneNumber = [String]()
+    var repFecNumber = [String]()
+
 
     var senatorID = [String]()
     var senateState = [String]()
@@ -58,6 +63,7 @@ class HomeTableViewController: UITableViewController {
     var senateMissedVotes = [String]()
     var senatePartyVotes = [String]()
     var senatePhoneNumber = [String]()
+    var senateFecNumber = [String]()
 
     
     
@@ -80,16 +86,17 @@ class HomeTableViewController: UITableViewController {
             
             let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
                 if error != nil {
-                    //print("ERROR")
+                    print("ERROR")
                 }
                 else {
-                    //print("parsing")
+                    print("parsing")
                     if let content = data {
                         do {
                             let JSON = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                             
                             if let results = JSON["results"] as? [[String: Any]] {
                                 for result in results {
+                                    
                                     
                                     if let members = result["members"] as? [[String: Any]] {
                                         for member in members {
@@ -158,6 +165,7 @@ class HomeTableViewController: UITableViewController {
                                             }
                                             
                                         }
+                                        
                                     }
 
                                 }
@@ -195,6 +203,9 @@ class HomeTableViewController: UITableViewController {
         request.httpMethod = "GET"
         let session = URLSession.shared
         
+        
+        
+        
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 //print("ERROR")
@@ -207,6 +218,20 @@ class HomeTableViewController: UITableViewController {
                         
                         if let results = JSON["results"] as? [[String: Any]] {
                             for result in results {
+                                
+                                if let roles = result["roles"] as? [[String: Any]] {
+                                    print("roles")
+                                    for role in roles {
+                                        print("roles2")
+                                        
+                                        if let fecID = role["fec_candidate_id"] as? String {
+                                            print("roles3")
+                                            self.senateFecNumber.append(fecID)
+                                            //print(fecID)
+                                        }
+                                        
+                                    }
+                                }
                                 
                                 if let members = result["members"] as? [[String: Any]] {
                                     
@@ -253,7 +278,6 @@ class HomeTableViewController: UITableViewController {
                                             self.senateElection.append(electionYear)
                                         }
                                         
-                                        
                                         //now do state initial
                                         if let stateFrom = member["state"] as? String {
                                             
@@ -266,7 +290,6 @@ class HomeTableViewController: UITableViewController {
                                             self.senateMissedVotes.append(missedVotes)
                                         }
                                         
-                                        
                                         //now do party alliegence
                                         if let votesWithParty = member["votes_with_party_pct"] as? String {
                                             
@@ -275,11 +298,11 @@ class HomeTableViewController: UITableViewController {
 
                                         
                                     }
+
                                 }
                                 
                             }
                         }
-                        //print(self.senators)
 
                     }
                     catch {
@@ -294,17 +317,18 @@ class HomeTableViewController: UITableViewController {
         
     }
 
- 
- 
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         getRepData()
         getSenateData()
         
+        
     }
-
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -322,12 +346,16 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        
+        
         if(houseOrSenate.selectedSegmentIndex == 0) {
             return representatives.count
         }
         else {
             return senators.count
         }
+  
+        
     }
     
     
@@ -352,6 +380,7 @@ class HomeTableViewController: UITableViewController {
         
         
         
+        //if(segmentedControl.selectedSegmentIndex == 0) {
         if(houseOrSenate.selectedSegmentIndex == 0) {
             
             let representativesName = self.representatives[indexPath.row]
@@ -425,76 +454,6 @@ class HomeTableViewController: UITableViewController {
     }
     
     
-    /*
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        if(houseOrSenate.selectedSegmentIndex == 0) {
-            //performSegue(withIdentifier: "reuseIdentifier", sender: self.representatives[indexPath.row])
-            
-            performSegue(withIdentifier: "reuseIdentifier", sender: self.repLinks[indexPath.row])
-            
-        }
-            
-        else {
-            
-            //performSegue(withIdentifier: "reuseIdentifier", sender:  self.senators[indexPath.row])
-            performSegue(withIdentifier: "reuseIdentifier", sender:  self.senateLinks[indexPath.row])
-            
-        }
-
-        
-        //let vc = storyboard?.instantiateViewController(withIdentifier: "Detail")
-        
-        //self.navigationController?.pushViewController(vc!, animated: true)
-    }
-   
-    */
-    
-    /*
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-        return objectArray[section].state
-    
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -505,11 +464,14 @@ class HomeTableViewController: UITableViewController {
         let detailedController = segue.destination as! DetailViewController
         
         
-        
+
         if(houseOrSenate.selectedSegmentIndex == 0) {
+            
+            
             detailedController.myName = self.representatives[indexPath.row]
             detailedController.bioGuide = self.repLinks[indexPath.row]
             detailedController.idNumber = self.repID[indexPath.row]
+            
             
             detailedController.stateInitial = self.repState[indexPath.row]
             detailedController.electionCycle = self.repElection[indexPath.row]
@@ -524,7 +486,8 @@ class HomeTableViewController: UITableViewController {
             detailedController.myName = self.senators[indexPath.row]
             detailedController.bioGuide = self.senateLinks[indexPath.row]
             detailedController.idNumber = self.senatorID[indexPath.row]
-
+            
+            
             detailedController.stateInitial = self.senateState[indexPath.row]
             detailedController.electionCycle = self.senateElection[indexPath.row]
             detailedController.missedVotes = self.senateMissedVotes[indexPath.row]
@@ -538,3 +501,11 @@ class HomeTableViewController: UITableViewController {
     
 
 }
+ 
+ 
+ extension HomeTableViewController: TwicketSegmentedControlDelegate {
+    func didSelect(_ segmentIndex: Int) {
+        self.tableView.reloadData()
+        print("Selected index: \(segmentIndex)")
+    }
+ }

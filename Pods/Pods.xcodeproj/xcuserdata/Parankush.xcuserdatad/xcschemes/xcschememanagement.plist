@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>PieCharts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Humbly Congress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -14,15 +19,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TwicketSegmentedControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0D58A36040AF668EB615F47CFF6419A1</key>
+		<key>5E4B9D023702B55BE61C5C148DF100EA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>49E6AE38DE75FF4B2C8B9227BBBE857B</key>
+		<key>7FB390EEF710A5F7B21A3396B44D28F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D8E7933A1509E78FE5A1780B7C218AA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DA0877BD87D66D649826ECC9C2E692C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

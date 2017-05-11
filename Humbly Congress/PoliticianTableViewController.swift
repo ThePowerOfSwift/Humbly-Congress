@@ -19,6 +19,10 @@ class Politician: UITableViewCell {
     
     @IBOutlet weak var name: UILabel!
     
+    @IBOutlet var fax: UIButton!
+    
+    
+    @IBOutlet var callDesign: UIButton!
         
     @IBAction func call(_ sender: UIButton) {
         if let url = URL(string: officePhone) {
@@ -38,8 +42,9 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     let messageComposer = MessageComposer()
 
-
+    
     @IBAction func faxPolitician(_ sender: UIButton) {
+        
         
         print("faxing")
         
@@ -54,16 +59,13 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         } else {
             print("Not allowed to fax.")
         }
-
+        
     }
     
     
     
     
-    
-    //put in a default random one
-    //var zipcode: String = "33328"
-    
+
     
     @IBOutlet var politicianTableView: UITableView!
     
@@ -90,33 +92,22 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     //get your location.
     
-    let locationManager = CLLocationManager()
+    var locationManager: CLLocationManager!
     
     var userLocation = CLLocationManager().location
     
-
-    
-    
-   
     
     func getLocation() {
+        
+        
         
         locationManager.delegate = self
         userLocation = locationManager.location
         
         
-        if CLLocationManager.authorizationStatus() != .authorizedAlways     // Check authorization for location tracking
-        {
-            locationManager.requestAlwaysAuthorization()                    // LocationManager will callbackdidChange... once user responds
-            locationManager.delegate = self
-            userLocation = locationManager.location
-        } else {
-            locationManager.startUpdatingLocation()
-            userLocation = locationManager.location
-        }
-        
+ 
 
-        if userLocation != nil {
+        if userLocation != nil  {
         
             userLocation = CLLocationManager().location!
         
@@ -179,6 +170,14 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
                                         
                                         self.numbers.append(numberWithpreFix)
                                     }
+                                    
+                                    //now do party.
+                                    if let party = result["party"] as? String {
+                                        
+                                        self.parties.append(party)
+                                        
+                                    }
+
 
                                     
                                 }
@@ -244,12 +243,6 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
                                             self.partyVotes.append(partyAllegiance)
                                         }
                                         
-                                        //now do party.
-                                        if let party = role["party"] as? String {
-                                            
-                                            self.parties.append(party)
-                                            
-                                        }
                                         
                                         //now do state initial
                                         if let stateFrom = role["state"] as? String {
@@ -286,7 +279,15 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     
     
-    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    getLocation()
+                }
+            }
+        }
+    }
     
     
     
@@ -296,43 +297,23 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
         super.viewDidLoad()
         
-
-        if CLLocationManager.authorizationStatus() != .authorizedAlways     // Check authorization for location tracking
-        {
-            locationManager.requestAlwaysAuthorization()                    // LocationManager will callbackdidChange... once user responds
-            locationManager.delegate = self
-            userLocation = locationManager.location
-            getLocation()
-            
-            /*
-            if(userLocation == nil) {
-                getLocation()
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
-            }
-            */
-
-            if counterForDispatch < 500 {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                counterForDispatch += 1
-            }
-            
-        } else {
-            locationManager.startUpdatingLocation()
-            userLocation = locationManager.location
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        if CLLocationManager.authorizationStatus() != .authorizedAlways {
+            locationManager.requestAlwaysAuthorization()
             getLocation()
         }
-        
-        
+        else {
+            getLocation()
+        }
+
+
         
         locationManager.delegate = self
         userLocation = locationManager.location
-
+      
+        
         
     }
     
@@ -351,14 +332,11 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        
         if(userLocation == nil) {
             
             getLocation()
             
         }
-        
-     
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Politician", for: indexPath) as UITableViewCell!
@@ -372,15 +350,14 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = imageView.frame.width/2
         imageView.clipsToBounds = true
-
-        
+    
         
         let nameOfPolitician = self.names[indexPath.row]
         
         let numberToCall = self.numbers[indexPath.row]
         
         let colorOfCell = self.parties[indexPath.row]
-
+        
         
         if let politicianCell = cell as? Politician {
             
@@ -392,16 +369,27 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
 
             
             imageView.sd_setImage(with: URL(string: self.links[indexPath.row]), placeholderImage: #imageLiteral(resourceName: "iCon"))
+           
 
             if (colorOfCell == "R") {
                 
                 politicianCell.backgroundColor = UIColor(red: 191/255, green: 115/255, blue: 115/255, alpha: 1)
                 
+                politicianCell.callDesign.setTitleColor(UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1), for: .normal)
+                
+                politicianCell.fax.setTitleColor(UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1), for: .normal)
+                
+                
             } else  {
                 
                 politicianCell.backgroundColor = UIColor(red: 115/255, green: 148/255, blue: 191/255, alpha: 1)
                 
+                 politicianCell.callDesign.setTitleColor(UIColor(red: 255/255, green: 122/255, blue: 0/255, alpha: 1), for: .normal)
+                
+                 politicianCell.fax.setTitleColor(UIColor(red: 255/255, green: 122/255, blue: 0/255, alpha: 1), for: .normal)
+                
             }
+            
             
         }
         
