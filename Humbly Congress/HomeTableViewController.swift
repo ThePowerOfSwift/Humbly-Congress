@@ -66,7 +66,7 @@ class HomeTableViewController: UITableViewController {
     var senateFecNumber = [String]()
 
     
-    
+    //use prorepubica api to get data of all US reps
     
     func getRepData() {
         
@@ -185,6 +185,7 @@ class HomeTableViewController: UITableViewController {
     }
     
     
+    //now get all senate data.
     
     
     func getSenateData() {
@@ -346,7 +347,7 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
+        //change tableview depending on which segement was selected (house or senate)
         
         if(houseOrSenate.selectedSegmentIndex == 0) {
             return representatives.count
@@ -378,9 +379,8 @@ class HomeTableViewController: UITableViewController {
         imageView.layer.cornerRadius = imageView.frame.width/2
         imageView.clipsToBounds = true
         
+        //fill data with rep stuff if rep was selected from the segment
         
-        
-        //if(segmentedControl.selectedSegmentIndex == 0) {
         if(houseOrSenate.selectedSegmentIndex == 0) {
             
             let representativesName = self.representatives[indexPath.row]
@@ -407,6 +407,8 @@ class HomeTableViewController: UITableViewController {
             }
             
         } else {
+            
+            //fill with senate stuff if senate segment was selected
             
             let senatorName = self.senators[indexPath.row]
             
@@ -463,7 +465,8 @@ class HomeTableViewController: UITableViewController {
         
         let detailedController = segue.destination as! DetailViewController
         
-        
+        //if a specific cell was selected, depending on which segemnet it was in, use the index of that cell to 
+        //load info to detail view controller.
 
         if(houseOrSenate.selectedSegmentIndex == 0) {
             
