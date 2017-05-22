@@ -13,6 +13,7 @@ import MessageUI
 
 class Politician: UITableViewCell {
     
+    //initialize variables from storyboard
     
     @IBOutlet var portrait: UIImageView!
     
@@ -30,6 +31,7 @@ class Politician: UITableViewCell {
         }
     }
     
+    //this below string is filled eventually with a number, used by call button above.
     
     var officePhone = String()
     
@@ -42,6 +44,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     let messageComposer = MessageComposer()
 
+    //below var used for faxing, not in cell class since the fax button is the same for every cell.
     
     @IBAction func faxPolitician(_ sender: UIButton) {
         
@@ -69,7 +72,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     @IBOutlet var politicianTableView: UITableView!
     
-   
+   //arrays that are filled later through JSON parsing
     
     var numbers = [String]()
     
@@ -96,6 +99,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     var userLocation = CLLocationManager().location
     
+    //this function grabs user location to get lat long coords (which we need for finding local politicians)
     
     func getLocation() {
         
@@ -106,7 +110,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
         
  
-
+        //only use lat long coords for json reading if access to user's location is possible (prevents crash when location is unknown)
         if userLocation != nil  {
         
             userLocation = CLLocationManager().location!
@@ -196,7 +200,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     }
     
     
-    
+    //now use a different api for more data, is called by getLocation.
     
     
     func getData(id: String) {
@@ -277,7 +281,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
 
     
-    
+    //used to authorize location at first launch
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
@@ -331,7 +335,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+        //safety check incase location was not loaded yet.
         if(userLocation == nil) {
             
             getLocation()
@@ -351,6 +355,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         imageView.layer.cornerRadius = imageView.frame.width/2
         imageView.clipsToBounds = true
     
+        //sets each cell a respective index of the array of the data.
         
         let nameOfPolitician = self.names[indexPath.row]
         
@@ -398,6 +403,7 @@ class PoliticianTableViewController: UITableViewController, CLLocationManagerDel
         
     }
     
+    //we give certain vars to detail view controller when a specific cell is tapped on
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
