@@ -40,6 +40,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet var viewBills: UIButton!
     
+    //since this is a view controller that doesn't have tables with cells, no need to use arrays to store data.
     
     var stateInitial = String()
     var electionCycle = String()
@@ -65,6 +66,8 @@ class DetailViewController: UIViewController {
     var pacs = Double()
     
     var id = String()
+    
+    //get the fec id to use for later stuff.
     
     func getFECid() {
         
